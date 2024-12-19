@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -14,21 +12,10 @@ func getIssueData(url string) ([]byte, error) {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	defer res.Body.Close()
-
-	data, err := io.ReadAll(res.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response: %w", err)
+	data, err1 := io.ReadAll(res.Body)
+	if err1 != nil {
+		return nil, fmt.Errorf("error creading data: %w", err1)
 	}
-
 	return data, nil
-}
-
-func prettify(data string) (string, error) {
-	var prettyJSON bytes.Buffer
-	err := json.Indent(&prettyJSON, []byte(data), "", "  ")
-	if err != nil {
-		return "", fmt.Errorf("error indenting JSON: %w", err)
-	}
-	return prettyJSON.String(), nil
 }
 
