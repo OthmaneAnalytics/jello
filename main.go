@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/url"
+	"log"
 )
 func getDomainNameFromURL(rawURL string) (string, error) {
 	parsedURL, err := url.Parse(rawURL)
@@ -54,16 +54,11 @@ const userObject = `{
 const issueURL = "https://api.boot.dev/v1/courses_rest_api/learn-http/issues"
 
 func main() {
-	issues, err := getIssueData(issueURL)
+	issues, err := getIssues(domain)
 	if err != nil {
-		log.Fatalf("error getting issue data: %v", err)
+		log.Fatalf("error getting issues data: %v", err)
 	}
-	// indent properly and print
-	prettyData, err := prettify(string(issues))
-	if err != nil {
-		log.Fatalf("error prettifying data: %v", err)
-	}
-	fmt.Println(prettyData)
+	logIssues(issues)
 }
 
 func prettify(data string) (string, error) {
