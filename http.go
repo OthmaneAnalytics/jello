@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"encoding/json"
 )
 
 func getIssueData(url string) ([]byte, error) {
@@ -17,5 +18,20 @@ func getIssueData(url string) ([]byte, error) {
 		return nil, fmt.Errorf("error creading data: %w", err1)
 	}
 	return data, nil
+}
+
+func getIssues(url string) ([]Issue, error) {
+	res, err := http.Get(url)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	defer res.Body.Close()
+
+	var issues []Issue
+	decoder := json.NewDecoder(res.Body)
+	if err:= decoder.Decode(&issues); err != nil{
+		return nil, fmt.Errorf("error decoding data: %w", err)
+	}
+	return issues, nil
 }
 
