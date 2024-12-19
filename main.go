@@ -7,6 +7,18 @@ import (
 	"log"
 )
 
+func marshalAll[T any](items []T) ([][]byte, error) {
+	var jbytes [][]byte
+	for _, item := range items {
+		data, err := json.Marshal(item) 
+		if err != nil{
+			return nil ,err
+		} 
+		jbytes = append(jbytes, data)
+	}
+	return jbytes, nil
+}
+
 const issueList = `{
 	"ISSUE ONE":{
 		"id": 0,
