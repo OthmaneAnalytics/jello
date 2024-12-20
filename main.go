@@ -5,9 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
-	"log"
+	"net/http"
 )
 
+func getContentType(res *http.Response) string {
+	return res.Header.Get("Content-type")
+}
+/*
 func main() {
 	res, err := http.Get(url)
 	if err != nil {
@@ -24,7 +28,7 @@ func main() {
 
 	logProjects(projects)
 }
-
+*/
 type Project struct {
 	Id        string `json:"id"`
 	Title     string `json:"title"`
