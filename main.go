@@ -7,6 +7,11 @@ import (
 	"net/url"
 	"log"
 )
+
+func getMailtoLinkForEmail(email string) string {
+	return "mailto:" + email
+}
+
 func getDomainNameFromURL(rawURL string) (string, error) {
 	parsedURL, err := url.Parse(rawURL)
 	if err != nil {
