@@ -6,9 +6,11 @@ import (
 	"fmt"
 	"net/url"
 	"net/http"
+	"log"
 )
 
 func main() {
+/*	
 	url := "https://api.boot.dev/v1/courses_rest_api/learn-http/projects/52fdfc07-2182-454f-963f-5f0f9a621d72"
 	apiKey := generateKey()
 
@@ -45,6 +47,13 @@ func main() {
 	fmt.Printf("- title: %s\n", newProject.Title)
 	fmt.Printf("- assignees: %d\n", newProject.Assignees)
 	fmt.Println("--------------------------------")
+*/
+	url := "https://api.boot.dev/v1/courses_rest_api/learn-http/users"
+	users, err := getUsers(url)
+	if err != nil {
+		log.Fatal("Error getting users:", err)
+	}
+	logUsers(users)
 }
 
 

@@ -12,6 +12,23 @@ import (
 )
 
 
+func getUsers(url string) ([]User, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	data, err1 := io.ReadAll(resp.Body)
+	if err1 != nil {
+		return nil, err1
+	}
+	var users []User
+	if err = json.Unmarshal(data, &users); err != nil{
+		return nil, err
+	}
+	return users, nil
+}
+
 type Project struct {
 	ID        string `json:"id"`
 	Title     string `json:"title"`
