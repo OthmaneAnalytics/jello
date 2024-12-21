@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"net/url"
 	"net/http"
-	"log"
-	"math/rand"
 )
 
 
@@ -112,8 +110,34 @@ func main() {
 	}
 	logUsers(userDataSecond)
 	fmt.Println("---")
+*/
+	projects := getResources("/v1/courses_rest_api/learn-http/projects")
+	fmt.Println("Projects:")
+	logResources(projects)
+	fmt.Println(" --- ")
+
+	issues := getResources("/v1/courses_rest_api/learn-http/issues")
+	fmt.Println("Issues:")
+	logResources(issues)
+	fmt.Println(" --- ")
+
+	users := getResources("/v1/courses_rest_api/learn-http/users")
+	fmt.Println("Users:")
+	logResources(users)
 }
 
+func logResources(resources []map[string]any) {
+	for _, resource := range resources {
+		jsonResource, err := json.Marshal(resource)
+		if err != nil {
+			fmt.Println("Error marshalling resource:", err)
+			continue
+		}
+		fmt.Printf(" - %s\n", jsonResource)
+	}
+}
+
+/*
 func generateKey() string {
 	const characters = "ABCDEF0123456789"
 	result := ""
@@ -145,7 +169,7 @@ func generateKey() string {
 		return
 	}
 	logUser(updatedUser)
-*/
+
 	userId := "0194fdc2-fa2f-4cc0-81d3-ff12045b73c8"
 	url := "https://api.boot.dev/v1/courses_rest_api/learn-http/users"
 	apiKey := generateKey()
@@ -172,7 +196,8 @@ func generateKey() string {
 	logUsers(newUsers)
 	fmt.Println("---")
 }
-
+*/
+/*
 func generateKey() string {
 	const characters = "ABCDEF0123456789"
 	result := ""
@@ -182,7 +207,7 @@ func generateKey() string {
 	}
 	return result
 }
-
+*/
 func getContentType(res *http.Response) string {
 	return res.Header.Get("Content-type")
 }
