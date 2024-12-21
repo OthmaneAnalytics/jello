@@ -5,13 +5,42 @@ import (
 	"io"
 	"net/http"
 	"encoding/json"
-	"math/rand"
 	"bytes"
 
 
 )
 
+func createUser(url, apiKey string, data User) (User, error) {
+	userdata, err := json.Marshal(data)
+	if err != nil {
+		return User{}, err
+	}
 
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(userdata))
+	if err != nil {
+		return User{}, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-API-Key",apiKey)
+	
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		return User{}, err
+	}
+	defer res.Body.Close()
+
+	var user User
+	decoder := json.NewDecoder(res.Body)
+	err = decoder.Decode(&user)
+	if err != nil {
+		return User{}, err
+	}
+
+	return user, nil
+}
+/*
 func getUsers(url string) ([]User, error) {
 	resp, err := http.Get(url)
 	if err != nil {
@@ -28,14 +57,14 @@ func getUsers(url string) ([]User, error) {
 	}
 	return users, nil
 }
-
+*/
 type Project struct {
 	ID        string `json:"id"`
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
 	Assignees int    `json:"assignees"`
 }
-
+/*
 func generateKey() string {
 	const characters = "ABCDEF0123456789"
 	result := ""
@@ -45,7 +74,7 @@ func generateKey() string {
 	}
 	return result
 }
-
+*/
 func getProjectResponse(apiKey, url string) (Project, error) {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
