@@ -138,7 +138,7 @@ func main() {
 	users := getResources("/v1/courses_rest_api/learn-http/users")
 	fmt.Println("Users:")
 	logResources(users)
-*/
+
 	baseURL := "https://api.boot.dev/v1/courses_rest_api/learn-http/users"
 
 	users, err := getUsers(baseURL)
@@ -146,8 +146,18 @@ func main() {
 		log.Fatal(err)
 	}
 	logUsers(users)
+*/
+		uuid := "2f8282cb-e2f9-496f-b144-c0aa4ced56db"
 
+	user, err := getUserById(URL, uuid)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	logUser(user)
 }
+
 
 
 
