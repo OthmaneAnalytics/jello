@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"log"
 	"net/http"
 )
 
@@ -110,7 +111,7 @@ func main() {
 	}
 	logUsers(userDataSecond)
 	fmt.Println("---")
-*/
+
 	projects := getResources("/v1/courses_rest_api/learn-http/projects")
 	fmt.Println("Projects:")
 	logResources(projects)
@@ -124,7 +125,18 @@ func main() {
 	users := getResources("/v1/courses_rest_api/learn-http/users")
 	fmt.Println("Users:")
 	logResources(users)
+*/
+	baseURL := "https://api.boot.dev/v1/courses_rest_api/learn-http/users"
+
+	users, err := getUsers(baseURL)
+	if err != nil {
+		log.Fatal(err)
+	}
+	logUsers(users)
+
 }
+
+
 
 func logResources(resources []map[string]any) {
 	for _, resource := range resources {
