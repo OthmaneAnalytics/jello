@@ -9,6 +9,19 @@ import (
 	"net/http"
 )
 
+func fetchTasks(baseURL, availability string) []Issue {
+	var av string
+	switch availability{
+		case "Low":
+		av = "1"
+		case "Medium":
+		av = "3"
+		case "High":
+		av = "5"
+	}
+	fullURL := baseURL +"?sort=estimate&limit=" + av
+	return getIssues(fullURL)
+}
 
 func getUserCode(url string) int {
 	res, err := http.Get(url)
