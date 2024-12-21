@@ -9,6 +9,17 @@ import (
 	"math/rand"
 )
 
+
+func getUserCode(url string) int {
+	res, err := http.Get(url)
+	if err != nil {
+		return 0
+	}
+	defer res.Body.Close()
+	return res.StatusCode
+}
+
+
 func main() {
 /*	
 	url := "https://api.boot.dev/v1/courses_rest_api/learn-http/projects/52fdfc07-2182-454f-963f-5f0f9a621d72"
