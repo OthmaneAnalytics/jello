@@ -8,7 +8,7 @@ import (
 	"bytes"
 	"errors"
 )
-
+/*
 func errIfNotHTTPS(URL string) error {
 	url, err := url.Parse(URL)
 	if err != nil {
@@ -19,7 +19,7 @@ func errIfNotHTTPS(URL string) error {
 	}
 	return nil
 }
-
+*/
 func getUsers(url string) ([]User, error) {
 	fullURL := url + "?sort=experience"
 	res, err := http.Get(fullURL)

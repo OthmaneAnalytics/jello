@@ -1,13 +1,25 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
-	"net/url"
-	"log"
 	"net/http"
 )
+
+func fetchData(url string) (int, error) {
+	res, err := http.Get(url)
+	if err != nil {
+		return 0, fmt.Errorf("network error: %v",err)
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != 200 {
+		return res.StatusCode, fmt.Errorf("non-OK HTTP status: %s", res.Status)
+	}
+
+	return res.StatusCode, nil
+}
+
+
 
 func fetchTasks(baseURL, availability string) []Issue {
 	var av string
@@ -32,9 +44,9 @@ func getUserCode(url string) int {
 	return res.StatusCode
 }
 
-
+/*
 func main() {
-/*	
+
 	url := "https://api.boot.dev/v1/courses_rest_api/learn-http/projects/52fdfc07-2182-454f-963f-5f0f9a621d72"
 	apiKey := generateKey()
 
@@ -146,7 +158,7 @@ func main() {
 		log.Fatal(err)
 	}
 	logUsers(users)
-*/
+
 		uuid := "2f8282cb-e2f9-496f-b144-c0aa4ced56db"
 
 	user, err := getUserById(URL, uuid)
@@ -172,7 +184,7 @@ func logResources(resources []map[string]any) {
 	}
 }
 
-/*
+
 func generateKey() string {
 	const characters = "ABCDEF0123456789"
 	result := ""
@@ -242,11 +254,11 @@ func generateKey() string {
 	}
 	return result
 }
-*/
+
 func getContentType(res *http.Response) string {
 	return res.Header.Get("Content-type")
 }
-/*
+
 func main() {
 	res, err := http.Get(url)
 	if err != nil {
@@ -270,7 +282,7 @@ type Project struct {
 	Completed bool   `json:"completed"`
 	Assigness int    `json:"assignees"`
 }
-*/
+
 func logProjects(projects []Project) {
 	for _, p := range projects {
 		fmt.Printf("Project: %s, Complete: %v\n", p.Title, p.Completed)
@@ -289,7 +301,7 @@ func getDomainNameFromURL(rawURL string) (string, error) {
 	return parsedURL.Hostname(), nil
 
 }
-/*
+
 func newParsedURL(urlString string) ParsedURL {
 	parsedUrl, err := url.Parse(urlString)
 	if err != nil {
@@ -356,7 +368,7 @@ func main() {
 	}
 	logIssues(issues)
 }
-*/
+
 func prettify(data string) (string, error) {
 	var prettyJSON bytes.Buffer
 	err := json.Indent(&prettyJSON, []byte(data), "", "  ")
@@ -365,4 +377,4 @@ func prettify(data string) (string, error) {
 	}
 	return prettyJSON.String(), nil
 }
-
+*/
